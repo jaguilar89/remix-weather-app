@@ -2,6 +2,7 @@ import { useLoaderData } from "@remix-run/react";
 import { getLocationData, getWeatherData } from "../data/weather";
 import dayjs from "dayjs";
 import LocalizedFormat from 'dayjs/plugin/localizedFormat.js';
+import sevenDayForecast from "../components/Forecast";
 
 export const meta = () => {
   return [{ title: "Remix Weather App" }];
@@ -21,7 +22,7 @@ export const loader = async () => {
 
 export default function Index() {
     const data = useLoaderData();
-    console.log(data.weatherData.current.weather[0])
+    console.log(data.weatherData.daily)
     const currentDate = new Date(data.weatherData.current.dt * 1000)
     dayjs.extend(LocalizedFormat);
 
@@ -59,17 +60,9 @@ export default function Index() {
                     </div>
                 </div>
                 <div class="divider table mx-2 text-center bg-transparent whitespace-nowrap"><span class="inline-block px-3"><small>Forecast</small></span></div>
-                <div class="px-6 py-6 relative">
-                    <div class="text-center justify-between items-center flex" style={{flexFlow: 'initial'}}>
-                        <div class="text-center mb-0 flex items-center justify-center flex-col"><span class="block my-1">Sun</span><img src="https://i.imgur.com/ffgW9JQ.png" class="block w-8 h-8" /><span class="block my-1">38.3&deg;</span></div>
-                        <div class="text-center mb-0 flex items-center justify-center flex-col"><span class="block my-1">Mon</span><img src="https://i.imgur.com/BQbzoKt.png" class="block w-8 h-8" /><span class="block my-1">39.9&deg;</span></div>
-                        <div class="text-center mb-0 flex items-center justify-center flex-col"><span class="block my-1">Tue</span><img src="https://i.imgur.com/BQbzoKt.png" class="block w-8 h-8" /><span class="block my-1">40.1&deg;</span></div>
-                        <div class="text-center mb-0 flex items-center justify-center flex-col"><span class="block my-1">Wed</span><img src="https://i.imgur.com/ffgW9JQ.png" class="block w-8 h-8" /><span class="block my-1">41.5&deg;</span></div>
-                        <div class="text-center mb-0 flex items-center justify-center flex-col"><span class="block my-1">Thu</span><img src="https://i.imgur.com/ffgW9JQ.png" class="block w-8 h-8" /><span class="block my-1">40.1&deg;</span></div>
-                        <div class="text-center mb-0 flex items-center justify-center flex-col"><span class="block my-1">Fri</span><img src="https://i.imgur.com/BQbzoKt.png" class="block w-8 h-8" /><span class="block my-1">38&deg;</span></div>
-                        <div class="text-center mb-0 flex items-center justify-center flex-col"><span class="block my-1">Sat</span><img src="https://i.imgur.com/BQbzoKt.png" class="block w-8 h-8" /><span class="block my-1">38&deg;</span></div>
-                    </div>
-                </div>
+
+                <sevenDayForecast />
+                
             </div>
         </div>
     </div>
@@ -78,3 +71,10 @@ export default function Index() {
   );
 }
 
+/*
+dayjs format:
+
+MMM = Abbreviated month name
+DD  = Day of the month, 2 digits
+ddd = The short name of the day of the week
+*/
