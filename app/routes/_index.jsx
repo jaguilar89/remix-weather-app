@@ -1,8 +1,8 @@
+import Forecast from "../components/Forecast";
 import { useLoaderData } from "@remix-run/react";
 import { getLocationData, getWeatherData } from "../data/weather";
 import dayjs from "dayjs";
 import LocalizedFormat from 'dayjs/plugin/localizedFormat.js';
-import sevenDayForecast from "../components/Forecast";
 
 export const meta = () => {
   return [{ title: "Remix Weather App" }];
@@ -59,10 +59,8 @@ export default function Index() {
                         </div>
                     </div>
                 </div>
-                <div class="divider table mx-2 text-center bg-transparent whitespace-nowrap"><span class="inline-block px-3"><small>Forecast</small></span></div>
-
-                <sevenDayForecast />
-                
+                <div class="divider table mx-2 text-center bg-transparent whitespace-nowrap"><span class="inline-block px-3"><h6>7 Day Forecast</h6></span></div>
+                    <Forecast data={data}/>
             </div>
         </div>
     </div>
