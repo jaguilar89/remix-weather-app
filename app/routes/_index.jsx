@@ -18,6 +18,12 @@ export const loader = async () => {
     }
 }
 
+export const action = async ({request}) => {
+    const searchInput = await request.formData();
+    const searchQuery = searchInput.get('search');
+    return searchQuery;
+}
+
 export default function Index() {
 
     return (
@@ -25,7 +31,7 @@ export default function Index() {
             <div class="mx-auto p-4 bg-gray-600 h-screen flex-col justify-center">
                 <div class='mb-10'>
                     <h1 class='text-center text-white text-xl font-bold'>
-                        Weather Widget Built With Remix and Tailwind CSS
+                        Simple Weather Widget Built With Remix and Tailwind CSS
                     </h1>
                 </div>
                 <Search />

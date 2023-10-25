@@ -1,6 +1,10 @@
+import { Form, useNavigation } from "@remix-run/react";
+
 export default function Search() {
+    const navigation = useNavigation();
+
     return (
-        <div class='max-w-md mx-auto'>
+        <div class='max-w-md mx-auto mb-10'>
             <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
                 <div class="grid place-items-center h-full w-12 text-gray-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -8,11 +12,16 @@ export default function Search() {
                     </svg>
                 </div>
 
-                <input
-                    class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
-                    type="text"
-                    id="search"
-                    placeholder="Enter a ZIP Code" />
+                <Form method="post">
+                    <input
+                        class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                        type="text"
+                        name="search"
+                        id="search"
+                        placeholder="Enter a ZIP Code"
+                        disabled={navigation.state === 'submitting'}
+                    />
+                </Form>
             </div>
         </div>
     )
