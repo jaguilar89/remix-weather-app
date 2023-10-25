@@ -1,8 +1,6 @@
-import { useActionData } from "@remix-run/react";
 import 'dotenv/config'
-
-const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
-const GEOCODING_API_KEY = process.env.GEOCODING_API_KEY;
+const WEATHER_API_KEY = process.env.WEATHER_API_KEY
+//const GEOCODING_API_KEY = process.env.GEOCODING_API_KEY;
 const LOCATION_ENDPOINT = 'http://api.openweathermap.org/geo/1.0/reverse';
 const DATA_ENDPOINT = 'https://api.openweathermap.org/data/2.5/onecall';
 
@@ -27,7 +25,7 @@ export const getWeatherData = async () => {
 export const getLocationData = async () => {
 
     try {
-        const res = await fetch(`${LOCATION_ENDPOINT}?lat=40.730610&lon=-73.935242&limit=5&appid=${API_KEY}`)
+        const res = await fetch(`${LOCATION_ENDPOINT}?lat=40.730610&lon=-73.935242&limit=5&appid=${WEATHER_API_KEY}`)
 
         if (!res.ok) {
             throw new Error(`API responded with status: ${res.status}`);

@@ -41,6 +41,8 @@ export default function Index() {
     );
 }
 
+//TODO: Figure out loader/action function input data (use search params?)
+
 /*
 dayjs format:
 
