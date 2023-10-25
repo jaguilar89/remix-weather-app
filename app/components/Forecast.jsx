@@ -5,7 +5,7 @@ export default function Forecast({ data }) {
         if (index === 0) return null // start at index 1 to exclude the current day
         
         return (
-            <div class="text-center mb-0 flex items-center justify-center flex-col">
+            <div key={data.weatherData.current.dt} class="text-center mb-0 flex items-center justify-center flex-col">
                 <span class="block my-1">{dayjs(day.dt * 1000).format('ddd')}</span>
                 <span class="block my-1">{dayjs(day.dt * 1000).format('MMM DD')}</span>
                 <img src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`} class="block w-8 h-8" />
