@@ -3,7 +3,6 @@ import usZips from 'us-zips'
 import Widget from "../components/Widget";
 import Search from "../components/Search";
 import { json, redirect } from "@remix-run/node";
-import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
 
 export const meta = () => {
     return [{ title: "Remix Weather App" }];
