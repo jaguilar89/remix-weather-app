@@ -10,8 +10,11 @@ export default function Widget() {
 
     return (
         <>
+            {data.errorMessage && (
+                <div class="text-red-500 mt-2">{data.errorMessage}</div>
+            )}
                 <div class="flex flex-wrap justify-center">
-                    <div class="px-2 max-w-2x1">
+                    <div class="px-2 max-w-2xl">
                         <div class="bg-gray-900 text-white relative min-w-0 break-words rounded-lg overflow-hidden mb-4 w-full bg-white dark:bg-gray-600">
                             <div class="px-6 py-6 relative">
                                 <div class="flex mb-4 justify-between items-center">

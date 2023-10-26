@@ -1,15 +1,22 @@
 import { getLocationData, getWeatherData } from "../data/weather";
+import usZips from 'us-zips'
 import Widget from "../components/Widget";
 import Search from "../components/Search";
+import { redirect } from "@remix-run/node";
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
 
 export const meta = () => {
     return [{ title: "Remix Weather App" }];
 };
 
-export const loader = async () => {
+export const loader = async ({request}) => {
+    const url = new URL(request.url);
+    const lat = url.searchParams.get('lat') || '40.75080'
+    const lon = url.searchParams.get('lon') || '-73.99612'
+
     const [locationData, weatherData] = await Promise.all([
-        getLocationData(),
-        getWeatherData()
+        getLocationData(lat, lon),
+        getWeatherData(lat, lon)
     ]);
 
     return {
@@ -19,9 +26,10 @@ export const loader = async () => {
 }
 
 export const action = async ({request}) => {
-    const searchInput = await request.formData();
-    const searchQuery = searchInput.get('search');
-    return searchQuery;
+    const searchForm = await request.formData();
+    const searchQuery = searchForm.get('search'); // zip code
+    const {latitude: lat, longitude: lon} = usZips[searchQuery]; // convert zip code to coordinates
+    return redirect(`/?lat=${lat}&lon=${lon}`);
 }
 
 export default function Index() {
@@ -41,7 +49,23 @@ export default function Index() {
     );
 }
 
-//TODO: Figure out loader/action function input data (use search params?)
+
+export function ErrorBoundary() {
+    const error = useRouteError();
+
+    if (isRouteErrorResponse(error)) {
+        return (
+            <div>
+              <h1>
+                {error.status} {error.statusText}
+              </h1>
+              <p>{error.data}</p>
+            </div>
+          );
+    } else {
+        return <h1>Unknown Error</h1>;
+      }
+}
 
 /*
 dayjs format:
