@@ -2,7 +2,7 @@ import { getLocationData, getWeatherData } from "../data/weather";
 import usZips from 'us-zips'
 import Widget from "../components/Widget";
 import Search from "../components/Search";
-import { redirect } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
 
 export const meta = () => {
@@ -11,9 +11,14 @@ export const meta = () => {
 
 export const loader = async ({request}) => {
     const url = new URL(request.url);
+    const error = url.searchParams.get('error');
     const lat = url.searchParams.get('lat') || '40.75080'
     const lon = url.searchParams.get('lon') || '-73.99612'
 
+    if (error) {
+        return {errorMessage: error}
+    }
+    
     const [locationData, weatherData] = await Promise.all([
         getLocationData(lat, lon),
         getWeatherData(lat, lon)
@@ -23,11 +28,17 @@ export const loader = async ({request}) => {
         location: locationData[0],
         weatherData: weatherData
     }
+
 }
 
 export const action = async ({request}) => {
     const searchForm = await request.formData();
     const searchQuery = searchForm.get('search'); // zip code
+
+    if (!usZips[searchQuery]) {
+        return json({errorMessage: 'Invalid ZIP Code'})
+    }
+
     const {latitude: lat, longitude: lon} = usZips[searchQuery]; // convert zip code to coordinates
     return redirect(`/?lat=${lat}&lon=${lon}`);
 }
@@ -49,23 +60,6 @@ export default function Index() {
     );
 }
 
-
-export function ErrorBoundary() {
-    const error = useRouteError();
-
-    if (isRouteErrorResponse(error)) {
-        return (
-            <div>
-              <h1>
-                {error.status} {error.statusText}
-              </h1>
-              <p>{error.data}</p>
-            </div>
-          );
-    } else {
-        return <h1>Unknown Error</h1>;
-      }
-}
 
 /*
 dayjs format:

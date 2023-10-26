@@ -1,17 +1,22 @@
 import Forecast from "./Forecast"
-import { useLoaderData } from "@remix-run/react";
+import { useActionData, useLoaderData } from "@remix-run/react";
 import dayjs from "dayjs";
 import LocalizedFormat from 'dayjs/plugin/localizedFormat.js';
 
 export default function Widget() {
     const data = useLoaderData();
+    const error = useActionData();
     const currentDate = new Date(data.weatherData.current.dt * 1000)
     dayjs.extend(LocalizedFormat);
 
     return (
         <>
-            {data.errorMessage && (
-                <div class="text-red-500 mt-2">{data.errorMessage}</div>
+            {error && (
+                <div class="text-center text-orange-500 text-2xl">
+                    <h1>
+                    {error.errorMessage}
+                    </h1>
+                </div>
             )}
                 <div class="flex flex-wrap justify-center">
                     <div class="px-2 max-w-2xl">

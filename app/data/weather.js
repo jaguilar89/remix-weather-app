@@ -17,7 +17,7 @@ export const getWeatherData = async (lat, lon) => {
         return weatherData;
 
     } catch (err) {
-        return {errorMessage: "Invalid ZIP Code!"}
+        console.error(err)
     }
 
 }
@@ -35,6 +35,6 @@ export const getLocationData = async (lat, lon) => {
         return locationData;
 
     } catch (err) {
-        console.log(err)
+        console.error(err)
     }
 }

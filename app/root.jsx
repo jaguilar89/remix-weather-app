@@ -6,6 +6,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteError,
+  isRouteErrorResponse
 } from "@remix-run/react";
 
 export const links = () => [
@@ -29,4 +31,20 @@ export default function App() {
       </body>
     </html>
   );
+}
+
+
+export function ErrorBoundary() {
+  const error = useRouteError()
+
+  if (isRouteErrorResponse(error)) {
+      return (
+        <div class="mx-auto p-4 bg-gray-600 h-screen flex-col justify-center">
+          <div class='mb-10'>
+            <h1>An error occured!</h1>
+            <p>{error.statusText}</p>
+          </div>
+        </div>
+        );
+  }
 }
