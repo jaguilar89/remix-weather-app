@@ -24,7 +24,7 @@ export default function Widget() {
                             <div class="px-6 py-6 relative">
                                 <div class="flex mb-4 justify-between items-center">
                                     <div>
-                                        <h5 class="mb-0 font-medium text-xl">{`${data.location.local_names.en}, ${data.location.state}`}</h5>
+                                        <h5 class="mb-0 font-medium text-xl">{`${data.location.local_names?.en || 'Undefined Location'}, ${data.location.state}`}</h5>
                                         <h6 class="mb-0">{dayjs(currentDate).format('dddd LL')}</h6>
                                         <small>{data.weatherData.current.weather[0].main}</small>
                                     </div>

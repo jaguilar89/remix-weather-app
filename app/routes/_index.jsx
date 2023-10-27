@@ -10,13 +10,8 @@ export const meta = () => {
 
 export const loader = async ({request}) => {
     const url = new URL(request.url);
-    const error = url.searchParams.get('error');
     const lat = url.searchParams.get('lat') || '40.75080'
     const lon = url.searchParams.get('lon') || '-73.99612'
-
-    if (error) {
-        return {errorMessage: error}
-    }
     
     const [locationData, weatherData] = await Promise.all([
         getLocationData(lat, lon),
@@ -31,14 +26,14 @@ export const loader = async ({request}) => {
 }
 
 export const action = async ({request}) => {
-    const searchForm = await request.formData();
-    const searchQuery = searchForm.get('search'); // zip code
+    const formData = await request.formData();
+    const zipCode = formData.get('search'); // zip code
 
-    if (!usZips[searchQuery]) {
+    if (!usZips[zipCode]) {
         return json({errorMessage: 'Invalid ZIP Code'})
     }
 
-    const {latitude: lat, longitude: lon} = usZips[searchQuery]; // convert zip code to coordinates
+    const {latitude: lat, longitude: lon} = usZips[zipCode]; // convert zip code to coordinates
     return redirect(`/?lat=${lat}&lon=${lon}`);
 }
 
