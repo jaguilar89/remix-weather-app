@@ -8,4 +8,12 @@ This is a simple weather widget I built while learning Remix. It is built with R
 - [OpenWeather API](https://openweathermap.org/)
 
 ## Usage
-- Visit [](https://remix-weather-widget.netlify.app/) and simply enter the US Zip Code of the location you want to view the current weather info for.
+- Clone this repo locally.
+```bash
+$ git clone git@github.com:jaguilar89/remix-weather-app.git
+```
+- Run the project in development mode.
+```bash
+$ npm run dev
+```
+- Visit `localhost:3000`, then simply enter the US Zip Code for the location you want to get weather info for.
